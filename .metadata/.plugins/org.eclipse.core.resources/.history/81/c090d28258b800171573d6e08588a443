@@ -1,0 +1,17 @@
+class Sudoku: 
+    def __init__(self, textInput):
+        file = open(textInput, "r")
+        
+        for i in range(0, 9):
+            line = file.readline().split(' ')
+            values = []
+            values.append([])
+            for j in range(0, 9): 
+                values[i].append(line[j])
+                print (values[i][j], end = ' ')
+            print()
+        
+
+
+Sudoku("input.txt")
+    

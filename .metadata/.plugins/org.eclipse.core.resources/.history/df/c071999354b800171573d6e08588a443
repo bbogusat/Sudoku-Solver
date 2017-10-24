@@ -1,0 +1,11 @@
+class Sudoku: 
+    def __init__(self, textInput):
+        file = open(textInput, "r")
+        print(file.read())
+        
+        
+
+
+
+Sudoku("input.txt")
+    
