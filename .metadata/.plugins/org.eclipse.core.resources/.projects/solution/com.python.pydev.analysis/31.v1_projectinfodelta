@@ -1,1 +1,18 @@
-DELSTRsolution
+INSTUPsolution
+C:\Users\Jasmaan Panesar\Desktop\Wilfrid Laurier\3B\CP468 - Artificial Intelligence\CP468-A2\solution\solution.py
+INFOS:&&1|1|2|0&&3|3|2|1&&2|4|2|1&&2|5|2|1&&2|6|2|1&&2|7|2|1&&2|8|2|1&&1|9|2|0&&3|10|2|9&&3|11|2|9&&2|4|2|9&&3|10|2|12&&3|11|2|12&&2|13|2|9&&3|11|2|14&&3|15|2|0
+values=3
+printSudoku=5
+cspSquare.__init__=12
+rowConstraint=7
+popDomain=13
+columnConstraint=6
+boxConstraint=8
+s=15
+solution=2
+cspSquare=9
+Sudoku=1
+domain=10
+cspSquare.popDomain=14
+__init__=4
+value=11

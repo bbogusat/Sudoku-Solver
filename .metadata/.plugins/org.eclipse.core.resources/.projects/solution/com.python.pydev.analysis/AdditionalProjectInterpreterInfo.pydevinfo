@@ -1,13 +1,33 @@
 -- VERSION_4
 -- START DISKCACHE_2
 C:\Users\Jasmaan Panesar\Desktop\Wilfrid Laurier\3B\CP468 - Artificial Intelligence\CP468-A2\.metadata\.plugins\org.eclipse.core.resources\.projects\solution\com.python.pydev.analysis\v2_indexcache
+solution|1508893298484939000|C:\Users\Jasmaan Panesar\Desktop\Wilfrid Laurier\3B\CP468 - Artificial Intelligence\CP468-A2\solution\solution.py
 -- END DISKCACHE
 -- START DICTIONARY
-0
+5
+1=solution
+3=cspSquare
+2=Sudoku
+5=cspSquare.popDomain
+4=cspSquare.__init__
 -- END DICTIONARY
 -- START TREE 1
-0
+6
+a|0|
+csp|1|cspSquare!9@
+d|0|
+fil|0|
+s|1|s!11@
+sud|1|Sudoku!9@
 -- END TREE
 -- START TREE 2
-0
+8
+__i|2|__init__!2&10@__init__!3&10@
+box|2|boxConstraint!2&10@boxPopArray!2&11@
+col|2|columnPopArray!2&11@columnConstraint!2&10@
+dom|2|domain!3&11@domain!4&11@
+pop|1|popDomain!3&10@
+pri|1|printSudoku!2&10@
+row|2|rowPopArray!2&11@rowConstraint!2&10@
+val|4|values!2&11@value!3&11@value!4&11@value!5&11@
 -- END TREE

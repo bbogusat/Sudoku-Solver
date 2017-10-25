@@ -1,0 +1,36 @@
+class Sudoku: 
+    def __init__(self, textInput):
+        file = open(textInput, "r")
+        values = []
+        for i in range(0, 9):
+            line = file.readline().split(' ')
+            values.append([])
+            for j in range(0, 9): 
+                values[i].append(int(line[j]))
+            print()
+        
+
+class cspSquare: 
+    domain = [1,2,3,4,5,6,7,8,9]
+    value = 0
+    def __init__(self, value):
+        if (value != 0):
+            self.domain = []
+            self.value = value
+        
+    def popDomain(self, values):
+        for i in values: 
+            if i in self.domain: 
+                self.domain.remove(i)
+                
+        
+    
+
+Sudoku("input.txt")
+a = cspSquare()
+a.popDomain([1,3,5,7,9])
+print(a.domain)
+
+
+
+    
