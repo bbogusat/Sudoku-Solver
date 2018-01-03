@@ -1,11 +1,10 @@
-# TODO:
-
-DEFAULT_DOMAIN = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+DEFAULT_DOMAIN = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
 class Square:
     def __init__(self, domain):
         self.domain = domain
+        self.neighbours = set()
 
     def __repr__(self):
         return str(self.domain)
@@ -20,8 +19,14 @@ class Square:
             return self.domain != other.domain
         return True
 
+    def popDomain(self, value):
+        self.domain = self.domain.difference(value)
+
     def getDomain(self):
         return self.domain
+
+    def GetNeighbours(self):
+        return self.neighbours
 
 
 class Puzzle:
@@ -29,16 +34,43 @@ class Puzzle:
         # list of squares
         self.board = board
         # List of constraints. Assumed to be != in the form of board coordinates
+        # Using index as the Hash of the Square in the set will change with update of domain
         # ((Row, Col), (Row,Col))
         self.constraints = constraints
 
     def __repr__(self):
-        shows = "Squares: " + str(self.squares) + \
+        shows = "Squares: " + str(self.board) + \
             "\nConstraints:" + str(self.constraints)
         return shows
 
+    def solve_ac3(self):
+        print("Solving . . . \n")
+        while(len(self.constraints) != 0):
+            row_col_values = self.constraints.pop()
+            constraint = []
+            for val in row_col_values:
+                row = val[0]
+                col = val[1]
+                constraint.append(self.board[row][col])
+            # if constraint 1 value is in the domain of constraint 0,
+            # remove that value from constraint 0 domain
+
+            if (len(constraint[1].getDomain()) == 1 and
+                    (constraint[0].getDomain().issuperset(constraint[1].getDomain()))):
+                constraint[0].popDomain(constraint[1].getDomain())
+                if len(constraint[0].getDomain()) == 0:
+                    print("There are no more possible values for the: " +
+                          str(row_col_values[0]) + " square!")
+                    print("Arc-consistent CSP cannot be found.")
+                    return False
+
+                self.constraints.update(constraint[0].GetNeighbours())
+        print("Arc-Consistent version found")
+
+        return True
+
     def print_board(self):
-        print("Sudoku Puzzle")
+        print("Sudoku Puzzle:")
         for r_num in range(len(self.board)):
             if r_num != 0:
                 print()
@@ -48,15 +80,16 @@ class Puzzle:
                 if c_num != 0:
                     print(" ", end="")
                 if len(cur_domain) != 1:
-                    print(0, end="")
+                    print('0', end="")
                 else:
-                    print(cur_domain[0], end="")
+                    for val in cur_domain:
+                        print(val, end="")
                 if c_num % 3 == 2:
                     if c_num != len(self.board) - 1:
                         print(" |", end="")
                     elif r_num % 3 == 2 and r_num != len(self.board) - 1:
                         print("\n------+-------+------", end="")
-        print()
+        print("\n")
 
 
 def parse_input(txt_file):
@@ -70,10 +103,10 @@ def parse_input(txt_file):
         board.append([])
         for j in range(9):
             # Col
-            if line[j] == "0":
+            if int(line[j]) == 0:
                 board[i].append(Square(DEFAULT_DOMAIN))
             else:
-                board[i].append(Square([int(line[j])]))
+                board[i].append(Square({int(line[j])}))
 
     # Constraint is assumed to be !=
     constraints = set()
@@ -84,8 +117,12 @@ def parse_input(txt_file):
         for col_num in range(board_size):
             for i in range(board_size):
                 if col_num != i:
+                    board[row_num][col_num].GetNeighbours().add(
+                        ((row_num, i), (row_num, col_num)))
                     constraints.add(((row_num, col_num), (row_num, i)))
                 if row_num != i:
+                    board[row_num][col_num].GetNeighbours().add(
+                        ((i, col_num), (row_num, col_num)))
                     constraints.add(((row_num, col_num), (i, col_num)))
 
     # Gets all of the blocks
@@ -103,6 +140,8 @@ def parse_input(txt_file):
         for square in block:
             for constraint_square in block:
                 if square != constraint_square:
+                    board[square[0]][square[1]].GetNeighbours().add((constraint_square,
+                                                                     square))
                     constraints.add((square, constraint_square))
 
     return Puzzle(board, constraints)
@@ -111,6 +150,8 @@ def parse_input(txt_file):
 def main():
     puzzle = parse_input("input.txt")
     puzzle.print_board()
+    if(puzzle.solve_ac3()):
+        puzzle.print_board()
 
 
 if __name__ == "__main__":
